@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Previous styles remain the same until .heart class */
+    body {
+      background-color: #ffe6f2;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.5;
+      animation: float 20s linear infinite;
+    }
+
+    .heart.small {
+      font-size: 15px;
+      color: #ff94c2;
+    }
+
+    .heart.medium {
+      font-size: 25px;
+      color: #ff80ab;
+    }
+
+    .heart.large {
+      font-size: 35px;
+      color: #ff6090;
+    }
+
+    .heart.outline {
+      color: #d81b60;
+    }
+
+    /* Rest of the previous styles remain the same */
+    h1 {
+      text-align: center;
+      color: #d81b60;
+      font-size: 48px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+      margin-bottom: 60px;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+      margin-top: 40px;
+    }
+
+    .bible-verses-container {
+      width: 400px;
+      height: 300px;
+      perspective: 1000px;
+    }
+
+    .bible-verse-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: rotate 20s infinite linear;
+    }
+
+    .bible-verse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #d81b60;
+      font-style: italic;
+      transform-origin: center;
+      transition: transform 0.5s;
+      line-height: 1.6;
+    }
+
+    .bible-verse:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+    .bible-verse:nth-child(2) { transform: rotateY(72deg) translateZ(300px); }
+    .bible-verse:nth-child(3) { transform: rotateY(144deg) translateZ(300px); }
+    .bible-verse:nth-child(4) { transform: rotateY(216deg) translateZ(300px); }
+    .bible-verse:nth-child(5) { transform: rotateY(288deg) translateZ(300px); }
+
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      animation: fadeIn 2s;
+      padding: 20px;
+    }
+
+    .valentine-btn {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(45deg, #ff4081, #ff80ab);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: bounce 1s infinite;
+    }
+
+    .valentine-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes float {
+      0% { 
+        transform: translateY(100vh) rotate(0deg); 
+        opacity: 0;
+      }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { 
+        transform: translateY(-20vh) rotate(360deg); 
+        opacity: 0;
+      }
+    }
+
+    @keyframes sway {
+      0% { transform: translateX(0) translateY(100vh); }
+      50% { transform: translateX(100px) translateY(50vh); }
+      100% { transform: translateX(0) translateY(-20vh); }
+    }
+
+    @keyframes diagonal {
+      0% { transform: translate(0, 100vh) rotate(0deg); }
+      100% { transform: translate(100px, -20vh) rotate(360deg); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .sparkle {
+      position: absolute;
+      background: white;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: sparkle 1.5s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  
+  <h1>Happy Valentine's Day Eunmin!! ❤️</h1>
+
+  <div class="content-wrapper">
+    <div class="buttons-container">
+      <button class="valentine-btn" onclick="createSparkles(event)">Send Hugs</button>
+      <button class="valentine-btn" onclick="createSparkles(event)">Share Joy</button>
+      <button class="valentine-btn" onclick="createSparkles(event)">Spread Love</button>
+      <button class="valentine-btn" onclick="createSparkles(event)">Special Message</button>
+    </div>
+
+    <div class="bible-verses-container">
+      <div class="bible-verse-carousel">
+        <div class="bible-verse">
+          "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs."
+          <br><br>
+          - 1 Corinthians 13:4-5
+        </div>
+        <div class="bible-verse">
+          "Above all, love each other deeply, because love covers over a multitude of sins."
+          <br><br>
+          - 1 Peter 4:8
+        </div>
+        <div class="bible-verse">
+          "And now these three remain: faith, hope and love. But the greatest of these is love."
+          <br><br>
+          - 1 Corinthians 13:13
+        </div>
+        <div class="bible-verse">
+          "Be completely humble and gentle; be patient, bearing with one another in love."
+          <br><br>
+          - Ephesians 4:2
+        </div>
+        <div class="bible-verse">
+          "We love because He first loved us."
+          <br><br>
+          - 1 John 4:19
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      const size = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
+      const isOutline = Math.random() > 0.7;
+      heart.className = `heart ${size} ${isOutline ? 'outline' : ''}`;
+      heart.innerHTML = isOutline ? '♡' : '❤';
+      
+      // Random starting position across the width of the screen
+      heart.style.left = Math.random() * 100 + 'vw';
+      
+      // Random animation duration
+      heart.style.animationDuration = (Math.random() * 8 + 12) + 's';
+      
+      // Random animation
+      const animations = ['float', 'sway', 'diagonal'];
+      heart.style.animationName = animations[Math.floor(Math.random() * animations.length)];
+      
+      document.getElementById('hearts').appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 20000);
+    }
+
+    function createSparkles(event) {
+      const messages = [
+        'Sending virtual hugs! 🤗',
+        'You make my heart smile! 😊',
+        'Spreading love to all! ❤️',
+        'You are special! ✨'
+      ];
+      alert(messages[Math.floor(Math.random() * messages.length)]);
+
+      for (let i = 0; i < 20; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = (event.pageX - 10 + Math.random() * 20) + 'px';
+        sparkle.style.top = (event.pageY - 10 + Math.random() * 20) + 'px';
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => {
+          sparkle.remove();
+        }, 1500);
+      }
+    }
+
+    // Create hearts more frequently
+    setInterval(createHeart, 200);
+    
+    // Initial burst of hearts
+    for(let i = 0; i < 20; i++) {
+      setTimeout(createHeart, i * 100);
+    }
+  </script>
+</body>
+</html>
