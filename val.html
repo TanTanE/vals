@@ -2,7 +2,7 @@
 <html>
 <head>
   <style>
-    /* Previous styles remain the same until .heart class */
+    /* Previous styles remain the same */
     body {
       background-color: #ffe6f2;
       font-family: 'Arial', sans-serif;
@@ -16,6 +16,42 @@
       align-items: center;
     }
 
+    /* Add new friendly note styles */
+    .friendly-note {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 200px;
+      z-index: 1000;
+      animation: fadeInLeft 1s ease-out;
+      border: 2px solid #ff80ab;
+    }
+
+    .friendly-note p {
+      color: #d81b60;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      text-align: center;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translate(-50px, -50%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(0, -50%);
+      }
+    }
+
+    /* Rest of the previous styles */
     .hearts {
       position: absolute;
       top: 0;
@@ -52,7 +88,6 @@
       color: #d81b60;
     }
 
-    /* Rest of the previous styles remain the same */
     h1 {
       text-align: center;
       color: #d81b60;
@@ -200,6 +235,11 @@
   </style>
 </head>
 <body>
+  <!-- Add the friendly note -->
+  <div class="friendly-note">
+    <p>Stay positive! And always know you have a friend! 🌟</p>
+  </div>
+
   <div class="hearts" id="hearts"></div>
   
   <h1>Happy Valentine's Day Eunmin!! ❤️</h1>
@@ -251,13 +291,9 @@
       heart.className = `heart ${size} ${isOutline ? 'outline' : ''}`;
       heart.innerHTML = isOutline ? '♡' : '❤';
       
-      // Random starting position across the width of the screen
       heart.style.left = Math.random() * 100 + 'vw';
-      
-      // Random animation duration
       heart.style.animationDuration = (Math.random() * 8 + 12) + 's';
       
-      // Random animation
       const animations = ['float', 'sway', 'diagonal'];
       heart.style.animationName = animations[Math.floor(Math.random() * animations.length)];
       
@@ -290,10 +326,8 @@
       }
     }
 
-    // Create hearts more frequently
     setInterval(createHeart, 200);
     
-    // Initial burst of hearts
     for(let i = 0; i < 20; i++) {
       setTimeout(createHeart, i * 100);
     }
